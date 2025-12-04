@@ -64,4 +64,3 @@ For connect smaptphone need to use usb and command:
 4. **Quit:** Type **q** and press Enter to exit.
 
 All screenshots are automatically saved to the `saved_screenshots` folder for reference.
-```
