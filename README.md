@@ -1,4 +1,4 @@
-# AI Screenshot Solver
+# ScreenAI
 
 A Python tool designed to quickly solve on-screen questions using AI models (Google Gemini or Claude 3.5 Sonnet). It captures a specific region of your screen, sends the image to the selected API, and returns the answer.
 
