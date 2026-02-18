@@ -23,8 +23,8 @@ GEMINI_KEYS = [k for k in GEMINI_KEYS if k]
 CLAUDE_KEY = os.getenv("CLAUDE_API_KEY")
 
 # Models
-GEMINI_MODEL = 'gemini-1.5-flash'
-CLAUDE_MODEL = "claude-3-5-sonnet-20241022"
+GEMINI_MODEL = "gemini-2.5-flash"
+CLAUDE_MODEL = "claude-sonnet-4-5-20250929"
 
 # Prompt
 PROMPT = "Посмотри на скриншот. Внимательно прочитай вопрос и варианты. Выдай ТОЛЬКО правильный ответ (букву или цифру). Без лишних слов."
