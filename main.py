@@ -6,6 +6,7 @@ import io
 import base64
 import itertools
 import time
+import re
 from config import (
     SAVE_FOLDER,
     X_COORD,
@@ -65,6 +66,17 @@ def take_screenshot():
         return None
 
 
+def extract_answer(text):
+    """Пытается извлечь только позицию варианта ответа: 1, 2, 3 или 4."""
+    if not text:
+        return None
+    text = str(text).strip()
+    match = re.search(r"\b[1-4]\b", text)
+    if match:
+        return match.group(0)
+    return None
+
+
 def run_gemini(screenshot):
     """Запрос к Gemini с ротацией ключей."""
     if not gemini_key_cycle:
@@ -79,8 +91,15 @@ def run_gemini(screenshot):
         print(f"🚀 Запрос к {GEMINI_MODEL}...")
         response = model.generate_content([PROMPT, screenshot])
 
+        raw_text = response.text if response.text else ""
+        answer = extract_answer(raw_text)
+
         print("\n" + "=" * 10 + " GEMINI " + "=" * 10)
-        print(response.text if response.text else "⚠️ Пустой ответ (фильтр?)")
+        if answer:
+            print(answer)
+        else:
+            print(raw_text if raw_text else "⚠️ Пустой ответ (фильтр?)")
+            print("⚠️ Не удалось однозначно извлечь вариант ответа. Проверьте формат или попробуйте другой ключ.")
         print("=" * 28 + "\n")
 
     except Exception as e:
@@ -109,8 +128,21 @@ def run_claude(screenshot):
                 ]
             }]
         )
+        raw_text = ""
+        if response.content and len(response.content) > 0:
+            first_content = response.content[0]
+            if isinstance(first_content, dict):
+                raw_text = first_content.get("text", "") or ""
+            else:
+                raw_text = getattr(first_content, 'text', '') or ''
+        answer = extract_answer(raw_text)
+
         print("\n" + "=" * 10 + " CLAUDE " + "=" * 10)
-        print(response.content[0].text)
+        if answer:
+            print(answer)
+        else:
+            print(raw_text if raw_text else "⚠️ Пустой ответ (фильтр?)")
+            print("⚠️ Не удалось однозначно извлечь вариант ответа. Проверьте формат или попробуйте другой ключ.")
         print("=" * 28 + "\n")
 
     except Exception as e:

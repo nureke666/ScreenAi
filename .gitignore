@@ -3,4 +3,5 @@
 .idea
 __pycache__/
 
-check_models.py
+saved_screenshots/
+*.jpg
