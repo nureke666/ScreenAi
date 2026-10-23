@@ -1,6 +1,6 @@
 import google.generativeai as genai
 import anthropic
-import pyautogui
+from PIL import ImageGrab
 import os
 import io
 import base64
@@ -56,7 +56,7 @@ def take_screenshot():
     """Скриншот области экрана."""
     print(f"\n📸 Делаю скриншот...")
     try:
-        screenshot = pyautogui.screenshot(region=(X_COORD, Y_COORD, WIDTH, HEIGHT))
+        screenshot = ImageGrab.grab(bbox=(X_COORD, Y_COORD, X_COORD + WIDTH, Y_COORD + HEIGHT)).convert("RGB")
         save_path = get_next_filename()
         screenshot.save(save_path)
         print(f"✅ Сохранено: {save_path}")
