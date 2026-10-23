@@ -14,7 +14,13 @@ This project uses the `uv` package manager.
 2. **Install dependencies:**
    Run the following command to add the required libraries:
    ```bash
-   uv add google-generativeai anthropic python-dotenv pyautogui pillow
+   uv add google-generativeai anthropic python-dotenv pillow
+   ```
+
+3. **Linux with Wayland (Ubuntu by default):**
+   Screenshots go through `gnome-screenshot`, install it once:
+   ```bash
+   sudo apt install gnome-screenshot
    ```
 
 ## ⚙️ Configuration
